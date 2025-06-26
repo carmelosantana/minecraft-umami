@@ -119,6 +119,13 @@ public class UmamiService {
      * Send event synchronously with retry logic
      */
     private void sendEventSync(String eventName, Map<String, Object> eventData) throws IOException {
+        sendEventSync(eventName, eventData, null);
+    }
+
+    /**
+     * Send event synchronously with retry logic and optional client IP
+     */
+    private void sendEventSync(String eventName, Map<String, Object> eventData, String clientIp) throws IOException {
         JsonObject payload = createPayload(eventName, eventData);
         
         if (configManager.isLogEventsEnabled()) {
@@ -133,8 +140,13 @@ public class UmamiService {
         Request.Builder requestBuilder = new Request.Builder()
                 .url(configManager.getApiEndpoint())
                 .post(body)
-                // .addHeader("User-Agent", "Minecraft-Umami-Plugin/1.0.1")
+                .addHeader("User-Agent", "")
                 .addHeader("Content-Type", "application/json");
+
+        // Add X-Forwarded-For header with client IP if provided
+        if (clientIp != null && !clientIp.isEmpty()) {
+            requestBuilder.addHeader("X-Forwarded-For", clientIp);
+        }
 
         // Add API key if configured
         String apiKey = configManager.getApiKey();
@@ -192,12 +204,24 @@ public class UmamiService {
         root.addProperty("type", "event");
         
         JsonObject payload = new JsonObject();
-        // payload.addProperty("hostname", "minecraft-server");
         payload.addProperty("language", "en-US");
-        // payload.addProperty("referrer", "");
-        // payload.addProperty("screen", "1920x1080");
-        payload.addProperty("title", "Minecraft Server");
-        payload.addProperty("url", "/game");
+        payload.addProperty("referrer", "");
+        payload.addProperty("screen", "1920x1080");
+        
+        // Use server name/description as title
+        String serverName = Bukkit.getServer().getMotd();
+        if (serverName == null || serverName.trim().isEmpty()) {
+            serverName = "Minecraft Server";
+        }
+        payload.addProperty("title", serverName);
+        
+        // Use world name as URL if available in event data, otherwise use default
+        String worldName = "/game";
+        if (eventData != null && eventData.containsKey("world")) {
+            worldName = "/" + eventData.get("world").toString();
+        }
+        payload.addProperty("url", worldName);
+        
         payload.addProperty("website", configManager.getWebsiteId());
         payload.addProperty("name", eventName);
         
@@ -226,26 +250,45 @@ public class UmamiService {
      * Send a player event with common player data
      */
     public void sendPlayerEvent(String eventName, Player player, Map<String, Object> additionalData) {
-        Map<String, Object> eventData = new HashMap<>();
-        
-        // Add player data
-        if (configManager.isAnonymizePlayersEnabled()) {
-            eventData.put("player_id", player.getUniqueId().toString().hashCode());
-        } else {
-            eventData.put("player_id", player.getUniqueId().toString());
-            eventData.put("player_name", player.getName());
+        if (!isConfigured()) {
+            if (configManager.isDebugEnabled()) {
+                logger.warning("Umami not configured, skipping event: " + eventName);
+            }
+            return;
         }
-        
-        eventData.put("world", player.getWorld().getName());
-        eventData.put("gamemode", player.getGameMode().name().toLowerCase());
-        eventData.put("player_count", Bukkit.getOnlinePlayers().size());
-        
-        // Add additional data if provided
-        if (additionalData != null) {
-            eventData.putAll(additionalData);
-        }
-        
-        sendEvent(eventName, eventData);
+
+        CompletableFuture.runAsync(() -> {
+            try {
+                Map<String, Object> eventData = new HashMap<>();
+                
+                // Add player data
+                if (configManager.isAnonymizePlayersEnabled()) {
+                    eventData.put("player_id", player.getUniqueId().toString().hashCode());
+                } else {
+                    eventData.put("player_id", player.getUniqueId().toString());
+                    eventData.put("player_name", player.getName());
+                }
+                
+                eventData.put("world", player.getWorld().getName());
+                eventData.put("gamemode", player.getGameMode().name().toLowerCase());
+                eventData.put("player_count", Bukkit.getOnlinePlayers().size());
+                
+                // Add additional data if provided
+                if (additionalData != null) {
+                    eventData.putAll(additionalData);
+                }
+                
+                // Get player IP address for forwarding header
+                String playerIp = player.getAddress() != null ? player.getAddress().getAddress().getHostAddress() : null;
+                
+                sendEventSync(eventName, eventData, playerIp);
+            } catch (Exception e) {
+                logger.severe("Failed to send player event to Umami: " + e.getMessage());
+                if (configManager.isDebugEnabled()) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     /**
