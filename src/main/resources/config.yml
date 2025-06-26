@@ -1,0 +1,42 @@
+# Umami Tracker Plugin Configuration
+umami:
+  # Umami API Configuration
+  api:
+    endpoint: "https://your-umami-instance.com/api/send"
+    website_id: "your-website-id"
+    api_key: "your-api-key"
+    timeout: 5000 # Request timeout in milliseconds
+    retry_attempts: 3
+    retry_delay: 1000 # Delay between retries in milliseconds
+
+  # Event Tracking Configuration
+  tracking:
+    # Player Activity Events
+    player_login: true
+    player_logout: true
+    player_chat: true
+    crafting: true
+    player_kills: true
+    player_deaths: true
+    item_pickup: true
+    
+    # Server Performance Metrics
+    server_performance: true
+    player_count: true
+    world_stats: false
+
+  # Privacy Settings
+  privacy:
+    anonymize_players: false # Hash player UUIDs
+    
+  # Filtering
+  filters:
+    ignore_ops: false # Ignore operator activity
+    ignore_creative: false # Ignore creative mode players
+    min_session_time: 30 # Minimum session time to track (seconds)
+    
+  # Debug Settings
+  debug:
+    enabled: false # Enable debug logging
+    log_api_calls: false # Log all API calls
+    log_events: false # Log all tracked events

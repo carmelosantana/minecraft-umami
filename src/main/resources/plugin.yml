@@ -1,0 +1,22 @@
+name: Umami
+version: '${project.version}'
+main: world.hv2.umami.UmamiPlugin
+api-version: '1.21'
+authors: [Carmelo Santana]
+website: https://github.com/carmelosantana/minecraft-umami
+description: A powerful analytics plugin that tracks player activity through the Umami API
+
+commands:
+  umami:
+    description: Main Umami plugin command
+    usage: /umami <reload|status|test|online|version>
+    permission: umami.use
+    aliases: [uma]
+
+permissions:
+  umami.use:
+    description: Basic permission to use Umami commands
+    default: true
+  umami.admin:
+    description: Administrative permission for Umami plugin
+    default: op
