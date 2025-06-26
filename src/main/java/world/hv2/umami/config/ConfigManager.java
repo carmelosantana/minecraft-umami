@@ -145,4 +145,8 @@ public class ConfigManager {
     public boolean isLogEventsEnabled() {
         return config.getBoolean("umami.debug.log_events", false);
     }
+
+    public boolean isIgnoreSslCertificatesEnabled() {
+        return config.getBoolean("umami.api.ignore_ssl_certificates", false);
+    }
 }

@@ -7,7 +7,10 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import world.hv2.umami.config.ConfigManager;
 
+import javax.net.ssl.*;
 import java.io.IOException;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
@@ -29,12 +32,61 @@ public class UmamiService {
         this.gson = new Gson();
         this.logger = Logger.getLogger("UmamiService");
         
-        // Configure HTTP client
-        this.httpClient = new OkHttpClient.Builder()
+        // Configure HTTP client with SSL handling
+        OkHttpClient.Builder builder = new OkHttpClient.Builder()
                 .connectTimeout(configManager.getTimeout(), TimeUnit.MILLISECONDS)
                 .readTimeout(configManager.getTimeout(), TimeUnit.MILLISECONDS)
-                .writeTimeout(configManager.getTimeout(), TimeUnit.MILLISECONDS)
-                .build();
+                .writeTimeout(configManager.getTimeout(), TimeUnit.MILLISECONDS);
+        
+        // Configure SSL to handle certificate issues if enabled
+        if (configManager.isIgnoreSslCertificatesEnabled()) {
+            try {
+                // Create a TrustManager that accepts all certificates
+                TrustManager[] trustAllCerts = new TrustManager[] {
+                    new X509TrustManager() {
+                        @Override
+                        public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException {
+                            // Accept all client certificates
+                        }
+                        
+                        @Override
+                        public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {
+                            // Accept all server certificates
+                        }
+                        
+                        @Override
+                        public X509Certificate[] getAcceptedIssuers() {
+                            return new X509Certificate[]{};
+                        }
+                    }
+                };
+                
+                // Install the trust manager
+                SSLContext sslContext = SSLContext.getInstance("SSL");
+                sslContext.init(null, trustAllCerts, new java.security.SecureRandom());
+                
+                // Create an ssl socket factory with our trust manager
+                SSLSocketFactory sslSocketFactory = sslContext.getSocketFactory();
+                
+                builder.sslSocketFactory(sslSocketFactory, (X509TrustManager) trustAllCerts[0]);
+                builder.hostnameVerifier(new HostnameVerifier() {
+                    @Override
+                    public boolean verify(String hostname, SSLSession session) {
+                        return true; // Accept all hostnames
+                    }
+                });
+                
+                if (configManager.isDebugEnabled()) {
+                    logger.info("SSL certificate validation disabled for Umami API connections");
+                }
+                
+            } catch (Exception e) {
+                logger.warning("Failed to configure SSL trust manager: " + e.getMessage());
+                // Continue with default SSL configuration
+            }
+        }
+        
+        this.httpClient = builder.build();
     }
 
     /**
@@ -81,8 +133,7 @@ public class UmamiService {
         Request.Builder requestBuilder = new Request.Builder()
                 .url(configManager.getApiEndpoint())
                 .post(body)
-                // Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:139.0) Gecko/20100101 Firefox/139.0
-                .addHeader("User-Agent", "Minecraft-Umami-Plugin/1.0.1")
+                // .addHeader("User-Agent", "Minecraft-Umami-Plugin/1.0.1")
                 .addHeader("Content-Type", "application/json");
 
         // Add API key if configured
@@ -141,7 +192,7 @@ public class UmamiService {
         root.addProperty("type", "event");
         
         JsonObject payload = new JsonObject();
-        payload.addProperty("hostname", "minecraft-server");
+        // payload.addProperty("hostname", "minecraft-server");
         payload.addProperty("language", "en-US");
         // payload.addProperty("referrer", "");
         // payload.addProperty("screen", "1920x1080");

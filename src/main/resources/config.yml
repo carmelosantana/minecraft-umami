@@ -8,6 +8,7 @@ umami:
     timeout: 5000 # Request timeout in milliseconds
     retry_attempts: 3
     retry_delay: 1000 # Delay between retries in milliseconds
+    ignore_ssl_certificates: false # Set to true to ignore SSL certificate validation errors
 
   # Event Tracking Configuration
   tracking:
