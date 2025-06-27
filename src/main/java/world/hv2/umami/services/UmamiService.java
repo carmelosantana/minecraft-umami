@@ -205,8 +205,6 @@ public class UmamiService {
         
         JsonObject payload = new JsonObject();
         payload.addProperty("language", "en-US");
-        payload.addProperty("referrer", "");
-        payload.addProperty("screen", "1920x1080");
         
         // Use server name/description as title
         String serverName = Bukkit.getServer().getMotd();
@@ -268,10 +266,6 @@ public class UmamiService {
                     eventData.put("player_id", player.getUniqueId().toString());
                     eventData.put("player_name", player.getName());
                 }
-                
-                eventData.put("world", player.getWorld().getName());
-                eventData.put("gamemode", player.getGameMode().name().toLowerCase());
-                eventData.put("player_count", Bukkit.getOnlinePlayers().size());
                 
                 // Add additional data if provided
                 if (additionalData != null) {
