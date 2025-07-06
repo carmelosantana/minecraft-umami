@@ -2,7 +2,46 @@
 
 A powerful analytics plugin that tracks **player activity** through the Umami API, providing server administrators with valuable insights into player behavior and server usage patterns.
 
-## 🎯 Features
+- [Features](#features)
+- [Tracked Events](#tracked-events)
+  - [Player Activity](#player-activity)
+- [Installation](#installation)
+  - [Plugin Requirements](#plugin-requirements)
+  - [Quick Install](#quick-install)
+  - [Build from Source](#build-from-source)
+- [Configuration](#configuration)
+- [Commands](#commands)
+  - [Examples](#examples)
+- [Permissions](#permissions)
+- [Umami Dashboard Integration](#umami-dashboard-integration)
+  - [Custom Events](#custom-events)
+  - [Event Categories](#event-categories)
+- [Privacy \& Security](#privacy--security)
+  - [Data Anonymization](#data-anonymization)
+  - [Security Best Practices](#security-best-practices)
+- [Docker Support](#docker-support)
+- [Error Handling](#error-handling)
+- [Performance](#performance)
+- [Technical Details](#technical-details)
+  - [Architecture](#architecture)
+  - [Dependencies](#dependencies)
+  - [Compatibility](#compatibility)
+- [Troubleshooting](#troubleshooting)
+  - [Common Issues](#common-issues)
+  - [Debug Mode](#debug-mode)
+- [Contributing](#contributing)
+  - [Developer Quick Start](#developer-quick-start)
+- [🎓 Learn AI Powered Plugin Development](#-learn-ai-powered-plugin-development)
+  - [What You'll Learn](#what-youll-learn)
+  - [Course Topics](#course-topics)
+  - [Booking Information](#booking-information)
+    - [1-on-1 Coaching Sessions Available](#1-on-1-coaching-sessions-available)
+    - [What's Included](#whats-included)
+  - [Get Started](#get-started)
+- [License](#license)
+
+
+## Features
 
 - **Comprehensive Player Tracking**: Login/logout, chat, crafting, combat, block interactions
 - **Privacy Focused**: Configurable anonymization of player data and locations
@@ -11,7 +50,7 @@ A powerful analytics plugin that tracks **player activity** through the Umami AP
 - **Admin Commands**: Easy management and monitoring tools
 - **Docker Support**: Ready for containerized deployments
 
-## 📋 Tracked Events
+## Tracked Events
 
 ### Player Activity
 
@@ -24,13 +63,11 @@ A powerful analytics plugin that tracks **player activity** through the Umami AP
 | ⚔️ **Combat Events** | Player kills and deaths | Cause of death, weapon used, PvP vs PvE |
 | 🧱 **Block Interactions** | Block placement and breaking | Block type, location, tool used |
 
-## 🛠 Installation
+## Installation
 
-### Requirements
+### Plugin Requirements
 
-- **Java**: 21 or higher
 - **Server**: Paper 1.21.6+, Spigot 1.21+, or Bukkit 1.21+
-- **Maven**: For building from source
 - **Umami Instance**: Self-hosted or cloud Umami analytics
 
 ### Quick Install
@@ -55,7 +92,7 @@ make build
 make install
 ```
 
-## ⚙️ Configuration
+## Configuration
 
 Edit `plugins/Umami/config.yml`:
 
@@ -104,7 +141,7 @@ umami:
 debug: false
 ```
 
-## 🎮 Commands
+## Commands
 
 | Command | Description | Permission |
 |---------|-------------|------------|
@@ -124,40 +161,12 @@ debug: false
 /umami reload        # Reload config
 ```
 
-## 📝 Permissions
+## Permissions
 
 - `umami.use` - Basic command usage (default: true)
 - `umami.admin` - Admin commands (default: op)
 
-## 🔧 Development
-
-### Quick Development Cycle
-
-```bash
-make dev             # Build, install, restart server
-make debug           # Interactive debug menu
-make test-commands   # Show available test commands
-```
-
-### Server Management
-
-```bash
-make setup           # Set up development environment
-make start           # Start Minecraft server
-make stop            # Stop server
-make restart         # Restart server
-make logs            # View server logs
-make status          # Check server status
-```
-
-### Docker Testing
-
-```bash
-make docker-build    # Build Docker container
-make docker-test     # Test in container
-```
-
-## 📊 Umami Dashboard Integration
+## Umami Dashboard Integration
 
 ### Custom Events
 
@@ -186,7 +195,7 @@ The plugin sends custom events to Umami with the following structure:
 - `minecraft_world_*` - World-specific events (future)
 - `minecraft_plugin_*` - Plugin-specific metrics
 
-## 🔒 Privacy & Security
+## Privacy & Security
 
 ### Data Anonymization
 
@@ -201,7 +210,7 @@ The plugin sends custom events to Umami with the following structure:
 - Regular security updates
 - Monitor API access logs
 
-## 🐳 Docker Support
+## Docker Support
 
 Compatible with the [Legendary Minecraft Geyser Docker container](https://github.com/TheRemote/Legendary-Java-Minecraft-Geyser-Floodgate):
 
@@ -216,21 +225,21 @@ services:
       - ./umami-1.0.1.jar:/minecraft/plugins/umami.jar
 ```
 
-## 🛡️ Error Handling
+## Error Handling
 
 - **Graceful API Failures**: Plugin continues working even if Umami is down
 - **Automatic Retries**: Configurable retry attempts with exponential backoff
 - **Queue Management**: Prevents memory issues with queue size limits
 - **Configuration Validation**: Validates settings on startup
 
-## 📈 Performance
+## Performance
 
 - **Asynchronous Processing**: All API calls run on separate threads
 - **Event Queuing**: Batched processing prevents server lag
 - **Memory Efficient**: Automatic cleanup and queue size limits
 - **Minimal Overhead**: Event-driven architecture with caching
 
-## 🔧 Technical Details
+## Technical Details
 
 ### Architecture
 
@@ -250,7 +259,7 @@ services:
 - **Java**: 21+
 - **Geyser/Floodgate**: Compatible
 
-## 🐛 Troubleshooting
+## Troubleshooting
 
 ### Common Issues
 
@@ -262,6 +271,7 @@ services:
 - Use `/umami test` to verify connectivity
 
 **High memory usage:**
+
 - Reduce event queue size in configuration
 - Check for network connectivity issues causing queue backup
 - Monitor queue statistics with `/umami status`
@@ -287,25 +297,29 @@ umami:
 
 ## Contributing
 
-1. Fork the repository
-2. Create a feature branch: `git checkout -b feature/amazing-feature`
-3. Make your changes and test thoroughly
-4. Run tests: `make test`
-5. Test in Docker: `make docker-test`
-6. Submit a pull request
+Please review [Contributing Guidelines](./CONTRIBUTING.md) for developer documentation. Including;
 
-### Guidelines
+- Development environment setup
+- Code standards and testing procedures
+- Pull request process
+- Server management and Docker support
+- Troubleshooting
 
-- Follow existing code style
-- Add tests for new features
-- Update documentation as needed
-- Test on both local server and Docker
-- Ensure compatibility with Paper 1.21.6+
+### Developer Quick Start
 
-## Requirements
+```bash
+# Set up development environment
+make setup
 
-- **Server**: Paper 1.21.6+
-- **Java**: 21 or higher
+# Quick development cycle
+make dev
+
+# Run tests
+make test
+
+# Test in Docker
+make docker-test
+```
 
 ## 🎓 Learn AI Powered Plugin Development
 
