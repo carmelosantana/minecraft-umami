@@ -5,7 +5,7 @@ A powerful analytics plugin that tracks **player activity** through the Umami AP
 ## 🎯 Features
 
 - **Comprehensive Player Tracking**: Login/logout, chat, crafting, combat, block interactions
-- **Privacy-Focused**: Configurable anonymization of player data and locations
+- **Privacy Focused**: Configurable anonymization of player data and locations
 - **Asynchronous Processing**: Event queue system prevents server lag
 - **Robust API Client**: Built-in retry logic and error handling
 - **Admin Commands**: Easy management and monitoring tools
@@ -213,7 +213,7 @@ services:
       - "25565:25565"
       - "19132:19132"
     volumes:
-      - ./umami-1.0.0.jar:/minecraft/plugins/umami-1.0.0.jar
+      - ./umami-1.0.1.jar:/minecraft/plugins/umami.jar
 ```
 
 ## 🛡️ Error Handling
@@ -247,8 +247,6 @@ services:
 ### Compatibility
 
 - **Paper**: 1.21.6+ (recommended)
-- **Spigot**: 1.21+
-- **Bukkit**: 1.21+
 - **Java**: 21+
 - **Geyser/Floodgate**: Compatible
 
@@ -257,6 +255,7 @@ services:
 ### Common Issues
 
 **Plugin not tracking events:**
+
 - Check if Umami configuration is correct
 - Verify API endpoint is accessible
 - Check server logs for error messages
@@ -268,6 +267,7 @@ services:
 - Monitor queue statistics with `/umami status`
 
 **Performance issues:**
+
 - Disable unnecessary event types
 - Increase API timeout settings
 - Check network latency to Umami instance
@@ -285,29 +285,74 @@ umami:
     log_events: true
 ```
 
-## 📄 License
+## Contributing
 
-Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)
+1. Fork the repository
+2. Create a feature branch: `git checkout -b feature/amazing-feature`
+3. Make your changes and test thoroughly
+4. Run tests: `make test`
+5. Test in Docker: `make docker-test`
+6. Submit a pull request
 
-## 👥 Credits
+### Guidelines
 
-- **Author**: Carmelo Santana
-- **Website**: https://hv2.world
-- **Live Server**: play.hv2.world
-- **Docker Container**: [Legendary Minecraft Geyser](https://github.com/TheRemote/Legendary-Java-Minecraft-Geyser-Floodgate)
+- Follow existing code style
+- Add tests for new features
+- Update documentation as needed
+- Test on both local server and Docker
+- Ensure compatibility with Paper 1.21.6+
 
-## 📞 Support
+## Requirements
 
-For support and questions:
-- Check the [documentation](https://hv2.world)
-- Review server logs for error messages
-- Test connectivity with `/umami test`
-- Visit our live server: `play.hv2.world`
+- **Server**: Paper 1.21.6+
+- **Java**: 21 or higher
 
-## 🚀 Future Enhancements
+## 🎓 Learn AI Powered Plugin Development
 
-- Server performance metrics
-- World-specific analytics
-- Advanced player behavior analysis
-- Integration with other analytics platforms
-- Real-time dashboard widgets
+**Want to build your own Minecraft plugins?** I built our plugin collection using generative AI, and I can teach you how to do the same!
+
+### What You'll Learn
+
+- **AI Assisted Coding**: How to effectively use AI tools like GitHub Copilot, ChatGPT, and Claude for plugin development
+- **Plugin Architecture**: Best practices for structuring robust, maintainable Minecraft plugins
+- **Modern Development**: Paper API, Maven build systems, Docker testing, and CI/CD workflows
+- **Problem Solving**: How to break down complex features into manageable tasks
+- **Code Quality**: Testing, debugging, and optimizing AI generated code
+
+### Course Topics
+
+- **Getting Started**: Setting up your AI development environment
+- **Plugin Fundamentals**: Events, commands, configuration, and permissions
+- **Advanced Features**: Custom items, recipes, data persistence, and performance optimization
+- **Testing & Deployment**: Docker containers, server management, and release workflows
+- **Real Projects**: Build actual plugins from concept to completion
+
+### Booking Information
+
+#### 1-on-1 Coaching Sessions Available
+
+- **Duration**: 1-2 hour sessions
+- **Format**: Screen share coding sessions via video call
+- **Family Friendly**: Parents are welcome and encouraged to join sessions, especially for younger students and curious parents wanting to learn alongside their children.
+
+#### What's Included
+
+- ✅ Live coding demonstration
+- ✅ AI prompt engineering techniques
+- ✅ Complete project setup and tooling
+- ✅ Plugin publishing and distribution
+- ✅ Follow up support and code review
+
+### Get Started
+
+Ready to accelerate your development with AI?
+
+- **[Schedule your call](https://cal.com/carmelosantana/learn-minecraft-with-ai)** - Book a session today!
+- **[Discord](https://discord.gg/udbJu8Sbyj)** - Ask questions, see examples.
+- **Public SMP Server** - Join us at `play.xp.farm` and test our plugins live!
+
+*Turn your plugin ideas into reality in hours, not weeks!*
+
+## License
+
+This project is licensed under the [Creative Commons Attribution-NonCommercial 4.0 International License](https://creativecommons.org/licenses/by-nc/4.0/).
