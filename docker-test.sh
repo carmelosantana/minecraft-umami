@@ -30,7 +30,7 @@ print_error() {
 }
 
 # Configuration
-PLUGIN_JAR="target/umami-1.0.0.jar"
+PLUGIN_JAR="target/umami-1.0.1.jar"
 CONTAINER_NAME="minecraft-umami-test"
 TEST_TIMEOUT=60
 
