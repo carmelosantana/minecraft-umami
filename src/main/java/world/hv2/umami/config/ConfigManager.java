@@ -40,6 +40,9 @@ public class ConfigManager {
      * Validate the configuration settings
      */
     private void validateConfig() {
+        if (!isEnabled()) {
+            return;
+        }
         if (getApiEndpoint().equals("https://your-umami-instance.com/api/send")) {
             plugin.getLogger().warning("Umami API endpoint not configured! Please update config.yml");
         }
@@ -50,6 +53,10 @@ public class ConfigManager {
     }
 
     // API Configuration
+    public boolean isEnabled() {
+        return config.getBoolean("umami.enabled", false);
+    }
+
     public String getApiEndpoint() {
         return config.getString("umami.api.endpoint", "https://your-umami-instance.com/api/send");
     }

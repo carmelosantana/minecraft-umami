@@ -1,0 +1,19 @@
+# Changelog
+
+All notable changes to Umami are documented here.
+
+## 1.1.0 - 2026-07-13
+
+### Changed
+
+- Updated the build baseline to Paper 26.1.2 and Java 25.
+- Updated Maven compiler and shading plugins for Java 25 bytecode.
+- Added GitHub Actions for tests, release JARs, SHA-256 checksums, and tagged releases.
+- Made analytics explicitly opt-in and dormant when disabled.\n- Prevented tracking listeners and network clients from starting while disabled.
+
+### Tested
+
+- Paper 26.1.2 build 74
+- Geyser 2.11.0
+- Floodgate 2.2.5 build 138
+- ViaVersion 5.11.0

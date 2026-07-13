@@ -1,5 +1,8 @@
 # Umami Tracker Plugin Configuration
 umami:
+  # Analytics are opt-in. The plugin stays dormant when disabled.
+  enabled: false
+
   # Umami API Configuration
   api:
     endpoint: "https://your-umami-instance.com/api/send"

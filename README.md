@@ -67,7 +67,7 @@ A powerful analytics plugin that tracks **player activity** through the Umami AP
 
 ### Plugin Requirements
 
-- **Server**: Paper 1.21.6+, Spigot 1.21+, or Bukkit 1.21+
+- **Server**: Paper 26.1.2+
 - **Umami Instance**: Self-hosted or cloud Umami analytics
 
 ### Quick Install
@@ -249,13 +249,13 @@ services:
 
 ### Dependencies
 
-- **Paper API**: 1.21.6+ for server integration
+- **Paper API**: 26.1.2+ for server integration
 - **OkHttp**: HTTP client for Umami API communication
 - **Gson**: JSON processing for event data
 
 ### Compatibility
 
-- **Paper**: 1.21.6+ (recommended)
+- **Paper**: 26.1.2+ (recommended)
 - **Java**: 21+
 - **Geyser/Floodgate**: Compatible
 

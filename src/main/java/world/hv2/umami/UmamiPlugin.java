@@ -22,6 +22,11 @@ public class UmamiPlugin extends JavaPlugin {
         configManager = new ConfigManager(this);
         configManager.loadConfig();
 
+        if (!configManager.isEnabled()) {
+            getLogger().info("Umami analytics is disabled; no tracking listeners or network clients were started.");
+            return;
+        }
+
         // Initialize Umami service
         umamiService = new UmamiService(configManager);
 
@@ -34,7 +39,7 @@ public class UmamiPlugin extends JavaPlugin {
         getCommand("umami").setExecutor(umamiCommand);
         getCommand("umami").setTabCompleter(umamiCommand);
 
-        getLogger().info("Umami Analytics plugin has been enabled!");
+        getLogger().info("Umami Analytics tracking has been enabled!");
         
         // Send startup event
         umamiService.sendEvent("minecraft_server_startup", null);
