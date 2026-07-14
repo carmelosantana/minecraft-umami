@@ -9,6 +9,14 @@
     <version>1.1.0</version>
     <packaging>jar</packaging>
 
+    <licenses>
+        <license>
+            <name>GNU Affero General Public License v3.0 or later</name>
+            <url>https://www.gnu.org/licenses/agpl-3.0.html</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
     <name>Umami</name>
     <description>A powerful analytics plugin that tracks player activity through the Umami API.</description>
     <url>https://github.com/carmelosantana/minecraft-umami</url>
