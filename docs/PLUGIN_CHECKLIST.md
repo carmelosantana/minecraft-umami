@@ -26,11 +26,11 @@ the fact to record what is *actually known*, not to reconstruct a history that d
 Accordingly:
 
 - **Gate 7a carries real evidence**, produced by the docker-rig-consolidation effort's shared test
-  rig, quoted verbatim below from `minecraft-plugin-docs/.superpowers/sdd/task-5-report.md`. That
+  rig, quoted verbatim below from `xpfarm-plugin-toolkit/.superpowers/sdd/task-5-report.md`. That
   report does not state its own date; the sibling `task-4-report.md` dates the same effort
   **2026-07-20**.
 - **Gate 7b cites a real recorded run** (the 2026-07-19 ecosystem matrix) in
-  `minecraft-plugin-docs/CURRENT_STATE.md`. It was not re-run for this backfill.
+  `xpfarm-plugin-toolkit/CURRENT_STATE.md`. It was not re-run for this backfill.
 - Everything else is either an **observed fact** (something readable in the repo or manifest today,
   with the place it was read stated) or is marked **NOT RECORDED / NOT RUN / UNKNOWN**.
 - An **observed fact is not a passed gate**. A checkbox is ticked only where a gate criterion is
@@ -46,7 +46,7 @@ Accordingly:
 - [ ] Status is explicitly recorded as active, experimental, or excluded. **NOT RECORDED at the
       time.** `active` is asserted here from the plugin's presence in
       `minecraft-plugin-updater/plugins.json` and in the Active Plugin Releases table of
-      `minecraft-plugin-docs/CURRENT_STATE.md`. No scoping decision was ever written down —
+      `xpfarm-plugin-toolkit/CURRENT_STATE.md`. No scoping decision was ever written down —
       notable for a plugin whose purpose is transmitting player activity to a third-party endpoint.
 - [ ] Purpose, commands, events, permissions, configuration, persistence, and acceptance checks are
       defined. **NOT RECORDED — predates the checklist process.** No requirements interview was
@@ -189,7 +189,7 @@ investigated**.
       shipped values, read today. That the code honours them was not verified here.**
 - [x] Ollama/Umami-style external endpoints are optional and failure-tolerant when applicable.
       **Evidence exists, but it is the matrix run's, not this gate's.**
-      `minecraft-plugin-docs/CURRENT_STATE.md` records that on 2026-07-19 this plugin was
+      `xpfarm-plugin-toolkit/CURRENT_STATE.md` records that on 2026-07-19 this plugin was
       deliberately pointed at TEST-NET-2 `198.51.100.9` to exercise the real failure path: "Umami
       enabled with a warning about its unconfigured website ID. Server stayed available." Cited
       from that document; **not re-run** here.
@@ -226,14 +226,14 @@ investigated**.
 
 ### 7a — single-plugin runtime verification — PARTIAL (real evidence, narrow scope)
 
-Evidence source: **this effort's shared test rig** (`minecraft-plugin-docs/bin/xpfarm-test-stack`)
+Evidence source: **this effort's shared test rig** (`xpfarm-plugin-toolkit/bin/xpfarm-test-stack`)
 on a disposable fresh-volume Legendary stack, recorded verbatim in
-`minecraft-plugin-docs/.superpowers/sdd/task-5-report.md`.
+`xpfarm-plugin-toolkit/.superpowers/sdd/task-5-report.md`.
 
 #### This repository's own harness never loaded the plugin
 
 Confirmed during the 2026-07-20 migration and corroborated by
-`minecraft-plugin-docs/CURRENT_STATE.md`: the deleted `docker-compose.yml` **had no JAR mount and
+`xpfarm-plugin-toolkit/CURRENT_STATE.md`: the deleted `docker-compose.yml` **had no JAR mount and
 no copy mechanism at all** — "it only ever booted stock Paper". It was not a stale path or a typo,
 as in the sibling repos; there was simply nothing there. Every local stack anyone ever brought up
 from this repository was a plain Paper server that had never heard of this plugin, and it came up
@@ -295,7 +295,7 @@ only that nothing in this repository could have shown it.
 
 ### 7b — ten-plugin ecosystem matrix — PASSED, but recorded elsewhere and not re-run here
 
-Not run by this backfill. `minecraft-plugin-docs/CURRENT_STATE.md` records an
+Not run by this backfill. `xpfarm-plugin-toolkit/CURRENT_STATE.md` records an
 **Ecosystem Matrix Run (2026-07-19) — PASSED 11/11** on a fresh-volume Legendary stack, installing
 every plugin through the one-shot updater from published release assets. Its row for this plugin:
 
@@ -383,7 +383,7 @@ has not been rehearsed in production either.
 ## 12. Handoff — PARTIAL
 
 - [ ] Current-state documentation refreshed with release, CI, updater, deployment, and local
-      pending state. **NOT DONE by this backfill** — `minecraft-plugin-docs/CURRENT_STATE.md` was
+      pending state. **NOT DONE by this backfill** — `xpfarm-plugin-toolkit/CURRENT_STATE.md` was
       deliberately left untouched. It already flags this repo as one of four carrying no gate 7a
       checklist record; that flag is now stale in this repo's favour.
 - [x] Known limitations, skipped checks, migration notes, rollback guidance, and follow-up owner
